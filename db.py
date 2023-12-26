@@ -80,6 +80,23 @@ def remove(student):
             connection.commit()
             connection.close()
 
+def clear():
+    try:
+        sql_command = f""" DELETE FROM study;
+        """
+        
+        connection,cursor = conn()
+        
+        cursor.execute(sql_command)
+    
+    
+    except(Exception, psycopg2.DatabaseError) as error:
+        print(error)
+    finally:
+        if connection is not None:
+            connection.commit()
+            connection.close()
+            
 def select(student):
     try:
         sql_command = f""" SELECT * FROM study WHERE

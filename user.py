@@ -10,6 +10,7 @@ def welcome():
     print("\n3-Removing data")
     print("\n4-Updating data")
     print("\n5-Show statistics")
+    print("\n6-Clear table")
     return int(input())
 
 def work(choice):
@@ -47,6 +48,9 @@ def work(choice):
             pearsonr = sp.stats.pearsonr(hours,grades)
             print(f"Pearsonr.stats:\n")
             print(f"Correlation={pearsonr[0]},p-value={pearsonr[1]}")
+        case 6:
+            result = db.clear()
+            print("Operation done successfully")
             
         case _:
             print("Invalid Choice, try again")
