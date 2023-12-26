@@ -101,6 +101,46 @@ def select(student):
             connection.commit()
             connection.close()
 
+def select_all():
+    try:
+        sql_command = f""" SELECT * FROM study;
+        """
+        
+        connection,cursor = conn()
+        
+        cursor.execute(sql_command)
+        
+        records = cursor.fetchall()
+        
+        return [row for row in records]
+    
+    except(Exception, psycopg2.DatabaseError) as error:
+        print(error)
+    finally:
+        if connection is not None:
+            connection.commit()
+            connection.close()
+            
+def select_stats():
+    try:
+        sql_command = f""" SELECT hours,grades FROM study;
+        """
+        
+        connection,cursor = conn()
+        
+        cursor.execute(sql_command)
+        
+        records = cursor.fetchall()
+        
+        return [row for row in records]
+    
+    except(Exception, psycopg2.DatabaseError) as error:
+        print(error)
+    finally:
+        if connection is not None:
+            connection.commit()
+            connection.close()
+
 def update(student,hours,grades):
 
     try:

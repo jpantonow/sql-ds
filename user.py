@@ -1,4 +1,7 @@
 import db as db
+import numpy as np
+import matplotlib as plt
+import scipy as sp
 
 def welcome():
     print("Welcome, user! What service would you like to try?")
@@ -6,6 +9,7 @@ def welcome():
     print("\n2-Selecting data")
     print("\n3-Removing data")
     print("\n4-Updating data")
+    print("\n5-Show statistics")
     return int(input())
 
 def work(choice):
@@ -20,9 +24,9 @@ def work(choice):
             student = input()
             result = db.select(student)
             print("Showing results:\n")
-            print(f"Estudante: {result[0][0]}\n")
-            print(f"Horas estudadas: {result[0][1]}\n")
-            print(f"Notas: {result[0][2]}\n")
+            print(f"Student: {result[0][0]}\n")
+            print(f"Hours of study: {result[0][1]}\n")
+            print(f"Grades: {result[0][2]}\n")
             print("Operation done successfully")
         case 3:
             print("Select a student: ")
@@ -34,6 +38,15 @@ def work(choice):
             student, hours, grades = input().split()
             db.update(student,int(hours),float(grades))
             print("Operation done successfully")
+        case 5:
+            result = db.select_stats()
+            hours = list(map(lambda x: x[0], result))
+            grades = list(map(lambda x: x[1], result))
+            print(f"Std.hours={np.std(hours)}\n")
+            print(f"Std.grades={np.std(grades)}\n")
+            pearsonr = sp.stats.pearsonr(hours,grades)
+            print(f"Pearsonr.stats:\n")
+            print(f"Correlation={pearsonr[0]},p-value={pearsonr[1]}")
             
         case _:
             print("Invalid Choice, try again")
