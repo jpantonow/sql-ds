@@ -1,6 +1,9 @@
 import db as db
 import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
+#import sklearn as sk
+from sklearn.linear_model import LogisticRegression
 import scipy as sp
 
 def welcome():
@@ -11,7 +14,8 @@ def welcome():
     print("\n4-Updating data")
     print("\n5-Show statistics")
     print("\n6-Show graphs")
-    print("\n7-Clear table")
+    print("\n7-Show regression stats")
+    print("\n8-Clear table")
     return int(input())
 
 def work(choice):
@@ -43,8 +47,6 @@ def work(choice):
         case 5:
             result = db.select_stats()
             hours,grades = zip(*result)
-            # hours = list(map(lambda x: x[0], result))
-            # grades = list(map(lambda x: x[1], result))
             print(f"Std.hours={np.std(hours)}\n")
             print(f"Std.grades={np.std(grades)}\n")
             pearsonr = sp.stats.pearsonr(hours,grades)
@@ -54,9 +56,6 @@ def work(choice):
         case 6:
             result = db.select_all()
             students,hours,grades = zip(*result)
-            # students = list(map(lambda x: x[0], result))
-            # hours = list(map(lambda x: x[1], result))
-            # grades = list(map(lambda x: x[2], result))
             plt.scatter(hours,grades)
             for stud,hour,grade in zip(students,hours,grades):
                 plt.annotate(stud,xy=(hour,grade),xytext=(5,-5),textcoords='offset points')
@@ -66,6 +65,17 @@ def work(choice):
             plt.show()
             
         case 7:
+            result = db.select_all()
+            students,hours,grades = zip(*result)
+            aprovados = [1 if h>5 else 0 for h in hours]
+            df = pd.DataFrame({'hours': hours, 'grades': aprovados})
+            horas = df[['hours']]
+            notas = df['grades']
+            model = LogisticRegression()
+            model.fit(horas,notas)
+            print(f"Model.intercept={model.intercept_},model.coef={model.coef_}")
+            
+        case 8:
             result = db.clear()
             print("Operation done successfully")
             
