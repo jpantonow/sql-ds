@@ -120,3 +120,4 @@ def update(student,hours,grades):
         if connection is not None:
             connection.commit()
             connection.close()
+

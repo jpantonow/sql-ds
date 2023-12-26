@@ -1,5 +1,7 @@
 import pandas as pd
 import scipy as sp
 import matplotlib as plt
-import db as db
-
+from user import *
+while True:
+    work(welcome())
+    break
