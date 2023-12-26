@@ -73,7 +73,9 @@ def work(choice):
             notas = df['grades']
             model = LogisticRegression()
             model.fit(horas,notas)
+            #y_pred = model.predict_proba(df)
             print(f"Model.intercept={model.intercept_},model.coef={model.coef_}")
+            #print(f"y_pred={y_pred}")
             
         case 8:
             result = db.clear()
