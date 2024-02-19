@@ -1,2 +1,2 @@
 # sql-ds
-Postgresql introduction alongside data science introduction
+Postgresql introduction for python
